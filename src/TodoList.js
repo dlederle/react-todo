@@ -12,10 +12,25 @@ class TodoList extends Component {
     };
     this.inputChanged = this.inputChanged.bind(this);
     this.addTodo = this.addTodo.bind(this);
+    this.todoToggle = this.todoToggle.bind(this);
   }
 
   inputChanged(e) {
     this.setState({ newTodo: e.target.value });
+  }
+
+  todoToggle(id) {
+    //This seems like such a hassle! but it does isolate state change
+    const todos = this.state.todos.map(t => {
+      if (t.id === id) {
+        return Object.assign({}, t, {
+          complete: !t.complete
+        });
+      } else {
+        return t;
+      }
+    });
+    this.setState({ todos });
   }
 
   addTodo(e) {
@@ -53,7 +68,7 @@ class TodoList extends Component {
     const stillTodo = [];
     const completed = [];
     this.state.todos.forEach(todo => {
-      let tmp = <Todo todo={todo} key={todo.id} />;
+      let tmp = <Todo todo={todo} key={todo.id} todoToggle={this.todoToggle} />;
       todo.complete ? completed.push(tmp) : stillTodo.push(tmp);
     });
     return (

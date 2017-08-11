@@ -7,9 +7,8 @@ class Todo extends Component {
     this.todoToggle = this.todoToggle.bind(this);
   }
 
-  todoToggle(e) {
-    const complete = !this.state.complete;
-    this.setState({ complete });
+  todoToggle() {
+    this.props.todoToggle(this.state.id);
   }
 
   render() {
